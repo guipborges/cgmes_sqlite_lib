@@ -1,5 +1,44 @@
 # Database Schema
 
+## Entity-Relationship Diagram
+
+```mermaid
+erDiagram
+    CGMES_INGESTION ||--o{ SUBSTATION : has
+    CGMES_INGESTION ||--o{ VOLTAGE_LEVEL : has
+    CGMES_INGESTION ||--o{ BAY : has
+    CGMES_INGESTION ||--o{ LINE : has
+    CGMES_INGESTION ||--o{ BUSBAR_SECTION : has
+    CGMES_INGESTION ||--o{ POWER_TRANSFORMER : has
+    CGMES_INGESTION ||--o{ AC_LINE_SEGMENT : has
+    CGMES_INGESTION ||--o{ BREAKER : has
+    CGMES_INGESTION ||--o{ CONNECTIVITY_NODE : has
+    CGMES_INGESTION ||--o{ TERMINAL : has
+    CGMES_INGESTION ||--o{ BASE_VOLTAGE : has
+    CGMES_INGESTION ||--o{ GEOGRAPHICAL_REGION : has
+    CGMES_INGESTION ||--o{ SUB_GEOGRAPHICAL_REGION : has
+
+    SUBSTATION ||--o{ VOLTAGE_LEVEL : contains
+    VOLTAGE_LEVEL ||--o{ BAY : contains
+    VOLTAGE_LEVEL ||--o{ BUSBAR_SECTION : contains
+    BAY ||--o{ BUSBAR_SECTION : contains
+    BAY ||--o{ BREAKER : contains
+    BAY ||--o{ POWER_TRANSFORMER : contains
+    BAY ||--o{ TERMINAL : contains
+    LINE ||--o{ AC_LINE_SEGMENT : contains
+    POWER_TRANSFORMER ||--o{ POWER_TRANSFORMER_END : has
+    POWER_TRANSFORMER_END ||--o{ RATIO_TAP_CHANGER : has
+    POWER_TRANSFORMER_END ||--o{ PHASE_TAP_CHANGER_ASYMMETRICAL : has
+    POWER_TRANSFORMER_END ||--o{ PHASE_TAP_CHANGER_SYMMETRICAL : has
+    TERMINAL }o--|| CONNECTIVITY_NODE : connects
+    TERMINAL }o--|| CONDUCTING_EQUIPMENT_MAP : equipment_type
+    AC_LINE_SEGMENT }o--|| BASE_VOLTAGE : voltage
+    VOLTAGE_LEVEL }o--|| BASE_VOLTAGE : voltage
+    SUB_GEOGRAPHICAL_REGION }o--|| GEOGRAPHICAL_REGION : region
+    SUBSTATION }o--|| SUB_GEOGRAPHICAL_REGION : region
+    LINE }o--|| SUB_GEOGRAPHICAL_REGION : region
+```
+
 ## Overview
 
 This SQLite database stores CGMES (Common Grid Model Exchange Standard) data parsed from XML files.
